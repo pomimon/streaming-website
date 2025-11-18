@@ -40,7 +40,7 @@ export function Navbar({ links, onClick }: NavbarProps) {
 
   return (
     <nav
-      className="navbar is-success has-shadow"
+      className="navbar is-success has-shadow is-fixed-top"
       role="navigation"
       aria-label="main navigation"
     >
