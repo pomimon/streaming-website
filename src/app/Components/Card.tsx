@@ -11,7 +11,7 @@ export function Card({ name, image }: CardProps) {
           <img src={image} alt="Placeholder image" />
         </figure>
       </div>
-      <div className="card-content">{name}</div>
+      <div className="card-header-title is-centered">{name}</div>
     </div>
   );
 }
