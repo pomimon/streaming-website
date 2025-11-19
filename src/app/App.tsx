@@ -1,53 +1,21 @@
 import "./../index.css";
 import React from "react";
-import { Navbar, CardGrid, Streams } from "./Components";
-import { AVAILABLE_CATEGORIES } from "./Data";
-import { findStreamsByTag } from "./Utils";
+import { Outlet } from "react-router";
+import { useParams } from "react-router";
 import { useState } from "react";
 
-const routes = createBrowserRouter([
-  {
-    path: "/",
-    Component: HomePage,
-  },
-  { path: "/stream", Component: StreamPage },
-]);
+import { Navbar } from "./Components";
+import { AVAILABLE_CATEGORIES } from "./Data";
+import { findStreamsByTag } from "./Utils";
 
-// enum - group of constants that do not change
-enum Page {
-  Home,
-  Stream,
-}
-
-export function App() {
-  const [currentPage, setCurrentPage] = useState(Page.Home);
-  const [currentCategory, setCurrentCategory] = useState("");
-
-  //
-  function onNavBarClick(category: string) {
-    if (category == "Home") {
-      setCurrentPage(Page.Home);
-    } else {
-      setCurrentPage(Page.Stream);
-      setCurrentCategory(category);
-    }
-  }
-
-  let pageContent = <div>Something went wrong</div>;
-
-  if (currentPage == Page.Home) {
-    pageContent = <CardGrid cards={AVAILABLE_CATEGORIES} />;
-  } else if (currentPage == Page.Stream) {
-    pageContent = <Streams category={currentCategory} />;
-  }
-
+export function AppLayout() {
   return (
     <>
-      <Navbar links={AVAILABLE_CATEGORIES} onClick={onNavBarClick} />
-      <div className="container">{pageContent}</div>
+      <Navbar links={AVAILABLE_CATEGORIES} />
+
+      <div className="container">
+        <Outlet />
+      </div>
     </>
   );
 }
-
-export default App;
-//
