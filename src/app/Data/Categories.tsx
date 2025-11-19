@@ -1,47 +1,57 @@
+import zebra from "./../assets/zebra-aw.jpg";
+import bird from "./../assets/bird.jpg";
+import country from "./../assets/countries.jpg";
+import eagle from "./../assets/eagle.jpg";
+import insect from "./../assets/insects.jpg";
+import mammals from "./../assets/mammals.jpg";
+import reptiles from "./../assets/reptiles.jpg";
+import pets from "./../assets/pets.jpg";
+import zoo from "./../assets/zoo.jpg";
+import aquatic from "./../assets/aquatic.jpg";
+
 export const AVAILABLE_CATEGORIES = [
   {
-    name: "African Wildlife",
-    image: "https://mangolinkcam.com/img/wildlife.jpg",
+    name: "Mammals",
+    image: zebra,
   },
   {
     name: "Birds",
-    image: "https://mangolinkcam.com/img/birds.jpg",
+    image: bird,
   },
   {
     name: "Aquatic",
-    image: "https://mangolinkcam.com/img/aquatic.jpg",
-  },
-  {
-    name: "Eagles",
-    image: "https://mangolinkcam.com/img/eagle.jpg",
-  },
-  {
-    name: "Mammals",
-    image: "https://mangolinkcam.com/img/mammals.jpg",
+    image: aquatic,
   },
   {
     name: "Reptiles",
-    image: "https://mangolinkcam.com/img/reptiles.jpg",
+    image: reptiles,
   },
   {
     name: "Zoos",
-    image: "https://mangolinkcam.com/img/zoos.jpg",
-  },
-
-  {
-    name: "Countries",
-    image: "https://mangolinkcam.com/img/countries.jpg",
-  },
-  {
-    name: "World",
-    image: "https://mangolinkcam.com/img/places.jpg",
-  },
-  {
-    name: "Insects",
-    image: "https://mangolinkcam.com/img/insects.jpg",
+    image: zoo,
   },
   {
     name: "Pets",
-    image: "https://mangolinkcam.com/img/pets.jpg",
+    image: pets,
   },
+  // {
+  //   name: "Eagles",
+  //   image: eagle,
+  // },
+  // {
+  //   name: "Mammals",
+  //   image: mammals,
+  // },
+  // {
+  //   name: "Countries",
+  //   image: country,
+  // },
+  // {
+  //   name: "World",
+  //   image: "https://mangolinkcam.com/img/places.jpg",
+  // },
+  // {
+  //   name: "Insects",
+  //   image: insect,
+  // },
 ];
