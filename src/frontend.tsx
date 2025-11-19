@@ -7,12 +7,27 @@
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { App } from "./app/App";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+
+import { AppLayout } from "./app/App";
+import { HomePage, CategoryPage } from "./app/Pages";
+
+const router = createBrowserRouter([
+  {
+    Component: AppLayout,
+    children: [
+      { index: true, Component: HomePage },
+      { path: "/streams/:category", Component: CategoryPage },
+    ],
+  },
+]);
 
 const elem = document.getElementById("root")!;
+
 const app = (
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>
 );
 
