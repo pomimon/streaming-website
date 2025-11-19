@@ -16,3 +16,4 @@ declare module "*.module.css" {
   export = classes;
 }
 declare module "*.png";
+declare module "*.jpg";
