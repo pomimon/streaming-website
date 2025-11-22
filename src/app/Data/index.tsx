@@ -1,2 +1,11 @@
 export { AVAILABLE_CATEGORIES } from "./Categories";
-export { AVAILABLE_STREAMS } from "./Streams";
+export { VIDEO_IDS as YOUTUBE_IDS } from "./Streams/YouTube";
+
+export interface VideoIdList {
+  Aquatic: string[];
+  Birds: string[];
+  Mammals: string[];
+  Pets: string[];
+  Reptiles: string[];
+  Zoos: string[];
+}
