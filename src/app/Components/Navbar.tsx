@@ -1,4 +1,4 @@
-import { CardProps } from "./Card";
+import type { CardProps } from "./Card";
 import { NavLink } from "react-router";
 
 const LOGO = <h1>Streams</h1>;
