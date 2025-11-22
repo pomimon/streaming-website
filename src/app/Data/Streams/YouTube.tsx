@@ -1,4 +1,4 @@
-import { VideoIdList } from "./../../Data";
+import type { VideoIdList } from "./../../Data";
 
 export const VIDEO_IDS: VideoIdList = {
   Mammals: {
