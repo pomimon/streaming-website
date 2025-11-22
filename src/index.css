@@ -1,3 +1,26 @@
+html {
+    padding-top: calc(var(--bulma-navbar-height) * 2) !important;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .navbar {
-    margin-bottom: 100px;
+    --bulma-navbar-box-shadow-color: rgb(0 0 0 / 0.17);
+    padding: 10px;
+}
+
+.navbar-item {
+    :active {
+        background-color: var(--bulma-navbar-item-active-background-color);
+        color: var(--bulma-navbar-item-active-color);
+    }
+    :hover {
+        background-color: var(--bulma-navbar-item-hover-background-color);
+        color: var(--bulma-navbar-item-hover-color);
+    }
+}
+
+.streams-container {
+    max-width: 500px;
+    margin: 0 auto;
 }
