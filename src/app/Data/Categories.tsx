@@ -11,16 +11,20 @@ import aquatic from "./../assets/aquatic.jpg";
 
 export const AVAILABLE_CATEGORIES = [
   {
-    name: "Mammals",
-    image: zebra,
+    name: "Aquatic",
+    image: aquatic,
   },
   {
     name: "Birds",
     image: bird,
   },
   {
-    name: "Aquatic",
-    image: aquatic,
+    name: "Mammals",
+    image: zebra,
+  },
+  {
+    name: "Pets",
+    image: pets,
   },
   {
     name: "Reptiles",
@@ -30,10 +34,7 @@ export const AVAILABLE_CATEGORIES = [
     name: "Zoos",
     image: zoo,
   },
-  {
-    name: "Pets",
-    image: pets,
-  },
+
   // {
   //   name: "Eagles",
   //   image: eagle,
