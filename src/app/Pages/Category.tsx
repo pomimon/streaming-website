@@ -1,8 +1,7 @@
 import { useParams } from "react-router";
-import { YouTubeStream } from "./../Utils";
-import { useLoaderData } from "react-router";
 import { useState } from "react";
-import { createPortal } from "react-dom";
+
+import { YouTubeStream } from "./../Utils";
 
 interface StreamProps {
   active: boolean;
@@ -42,7 +41,6 @@ export function Stream({ active, url, id, onOpen, onClose }: StreamProps) {
 }
 
 export function CategoryPage() {
-  const { gapi } = useLoaderData();
   const { category } = useParams<{ category: string }>();
 
   const [currentStream, setCurrentStream] = useState("");
@@ -58,11 +56,6 @@ export function CategoryPage() {
 
   // console.log("streams", streams);
 
-  // for (const stream of streams) {
-  //   stream.info(gapi).then((info) => {
-  //     console.log("stream info", info);
-  //   });
-  // }
   function getStreamPosition(id: string): number {
     const element = document.getElementById(`stream-${id}`);
     const navbar = document.querySelector(".navbar");
