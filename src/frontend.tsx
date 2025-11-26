@@ -10,15 +10,68 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 
-import { AppLayout } from "./app/App";
+import "./index.css";
+import { AppLayout } from "./app/Layout";
 import { HomePage, CategoryPage } from "./app/Pages";
+
+interface ICategory {
+  name: string;
+  slug: string;
+}
+
+interface ICategoriesLoader {
+  currentRequest?: Promise<ICategory[]>;
+  getCategories: () => Promise<ICategory[]>;
+}
+
+const CategoriesLoader: ICategoriesLoader = {
+  currentRequest: undefined,
+
+  async getCategories() {
+    if (CategoriesLoader.currentRequest) {
+      return await CategoriesLoader.currentRequest;
+    }
+
+    const request = fetch("/api/categories").then((response) =>
+      response.json(),
+    );
+
+    CategoriesLoader.currentRequest = request;
+
+    return await request;
+  },
+};
 
 const router = createBrowserRouter([
   {
     Component: AppLayout,
+    loader: async () => {
+      return {
+        categories: await CategoriesLoader.getCategories(),
+      };
+    },
     children: [
-      { index: true, Component: HomePage },
-      { path: "/streams/:category", Component: CategoryPage },
+      {
+        index: true,
+        Component: HomePage,
+        loader: async () => {
+          return {
+            categories: await CategoriesLoader.getCategories(),
+          };
+        },
+      },
+      {
+        path: "/streams/:category",
+        Component: CategoryPage,
+        loader: async ({ params: { category } }) => {
+          const response = await fetch(`/api/streams/${category}`);
+          const videoIds = await response.json();
+
+          return {
+            streams: videoIds,
+          };
+        },
+      },
     ],
   },
 ]);

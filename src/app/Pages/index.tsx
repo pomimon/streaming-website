@@ -1,2 +1,2 @@
 export { HomePage } from "./Home";
-export { CategoryPage } from "./Category";
+export { CategoryPage } from "./Streams";

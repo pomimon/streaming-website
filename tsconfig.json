@@ -8,6 +8,10 @@
     "jsx": "react-jsx",
     "allowJs": true,
 
+    // TypeORM
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
     // Bundler mode
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

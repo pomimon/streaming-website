@@ -1,31 +1,44 @@
 import { serve } from "bun";
+import "reflect-metadata";
 import index from "./index.html";
+
+import { AppDataSource } from "./server/data-source";
+import { CATEGORIES } from "./server/categories";
+import { Stream } from "./server/Stream";
+import { StreamInfo } from "./server/StreamInfo";
+
+const streamRepository = AppDataSource.getRepository(Stream);
 
 const server = serve({
   routes: {
     // Serve index.html for all unmatched routes.
     "/*": index,
 
-    "/api/hello": {
+    "/api/categories": {
       async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
+        return Response.json(CATEGORIES);
       },
     },
 
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
+    "/api/streams/:category": async (req) => {
+      const query = streamRepository
+        .createQueryBuilder("stream")
+        .where("stream.valid == 1")
+        .offset(90)
+        .limit(10)
+        .leftJoinAndSelect("stream.snapshot", "info")
+        // .where("info.live_broadcast_content == 'live'")
+        .orderBy("info.published_at", "DESC")
+        .getMany();
+
+      const streams = (await query).map((stream) => {
+        return {
+          id: stream.resource,
+          info: stream.snapshot || {},
+        };
       });
+
+      return Response.json(streams);
     },
   },
 
