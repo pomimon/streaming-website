@@ -1,0 +1,60 @@
+:root {
+  --card-gap: 40px;
+}
+
+.grid {
+  margin: 1em auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: var(--card-gap);
+}
+
+.card {
+  --card-cols: 3;
+  --total-gap-size: calc((var(--card-cols) - 1) * var(--card-gap));
+  --card-gap-size: calc(var(--total-gap-size) / var(--card-cols));
+  --card-width: calc(100% / var(--card-cols) - var(--card-gap-size));
+
+  background-color: white;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+  flex: 1 0 var(--card-width);
+  min-width: 300px;
+}
+
+.header {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  display: flex;
+  overflow: hidden;
+
+  img {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    aspect-ratio: 1;
+  }
+}
+
+.footer {
+  padding: 1.25rem 1.5rem;
+}
+
+.content {
+  overflow: hidden;
+}
+
+.preview {
+  aspect-ratio: 4 / 3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+
+  transform: scale(1);
+  transition: transform 240ms ease-in;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}

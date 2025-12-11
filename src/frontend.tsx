@@ -9,68 +9,91 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
+import { Outlet } from "react-router";
 
+import {
+  Container,
+  Footer,
+  Hero,
+  HeroBody,
+  HeroFoot,
+  Section,
+  Title,
+  Subtitle,
+  NavTabs,
+  NavTab,
+} from "Components";
+
+import { HomeRoute, StreamRoute } from "Routes";
 import "./index.css";
-import { AppLayout } from "./app/Layout";
-import { HomePage, CategoryPage } from "./app/Pages";
 
-interface ICategory {
-  name: string;
-  slug: string;
+import { CATEGORY_CARDS, CATEGORY_IMAGES } from "./config";
+
+function Layout() {
+  const home = <NavTab to="/">Home</NavTab>;
+
+  const tabs = CATEGORY_CARDS.map(({ title, slug }) => (
+    <NavTab key={slug} to={`/streams/${slug}`}>
+      {title}
+    </NavTab>
+  ));
+
+  return (
+    <>
+      <header>
+        <Hero>
+          <HeroBody>
+            <Title text="Wildlife Streams" />
+            <Subtitle text="Discover live streams of wildlife, pets, and nature from every corner of the planet" />
+          </HeroBody>
+
+          <HeroFoot>
+            <NavTabs>
+              {home}
+              {tabs}
+            </NavTabs>
+          </HeroFoot>
+        </Hero>
+      </header>
+
+      <Section>
+        <Container>
+          <Outlet />
+        </Container>
+      </Section>
+
+      <Footer>
+        <Container>
+          <Subtitle text="Animal Streams" />
+        </Container>
+      </Footer>
+    </>
+  );
 }
-
-interface ICategoriesLoader {
-  currentRequest?: Promise<ICategory[]>;
-  getCategories: () => Promise<ICategory[]>;
-}
-
-const CategoriesLoader: ICategoriesLoader = {
-  currentRequest: undefined,
-
-  async getCategories() {
-    if (CategoriesLoader.currentRequest) {
-      return await CategoriesLoader.currentRequest;
-    }
-
-    const request = fetch("/api/categories").then((response) =>
-      response.json(),
-    );
-
-    CategoriesLoader.currentRequest = request;
-
-    return await request;
-  },
-};
 
 const router = createBrowserRouter([
   {
-    Component: AppLayout,
-    loader: async () => {
-      return {
-        categories: await CategoriesLoader.getCategories(),
-      };
-    },
+    Component: Layout,
     children: [
       {
         index: true,
-        Component: HomePage,
-        loader: async () => {
+        Component: HomeRoute,
+      },
+      {
+        path: "/streams/:category",
+        Component: StreamRoute,
+        loader: async ({ params: { category } }) => {
+          const response = await fetch(`/api/streams/${category}`);
+          const streams = await response.json();
+
           return {
-            categories: await CategoriesLoader.getCategories(),
+            streams,
           };
         },
       },
       {
-        path: "/streams/:category",
-        Component: CategoryPage,
-        loader: async ({ params: { category } }) => {
-          const response = await fetch(`/api/streams/${category}`);
-          const videoIds = await response.json();
-
-          return {
-            streams: videoIds,
-          };
-        },
+        path: "*",
+        Component: () => <div>404</div>,
       },
     ],
   },

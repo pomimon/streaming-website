@@ -1,0 +1,42 @@
+.hero {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  background-image: linear-gradient(0deg, rgb(0 0 0 / 0.7), transparent 36%);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.body {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 3rem 1.5rem;
+}
+
+.head,
+.body,
+.foot {
+  position: relative;
+}
+
+.foot,
+.head {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+@media print, screen and (min-width: 769px) {
+  .hero .body {
+    padding: 9rem 4.5rem;
+  }
+}
