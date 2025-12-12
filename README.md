@@ -1,3 +1,10 @@
+A simple streaming website built with Typescript and React, deployed through Bun and Google Cloud.
+
+Check out the site here:
+https://stream-app-568744696610.us-west1.run.app/
+
+
+
 # bun-react-template
 
 To install dependencies:
