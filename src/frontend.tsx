@@ -86,9 +86,7 @@ const router = createBrowserRouter([
           const response = await fetch(`/api/streams/${category}`);
           const streams = await response.json();
 
-          return {
-            streams,
-          };
+          return streams;
         },
       },
       {

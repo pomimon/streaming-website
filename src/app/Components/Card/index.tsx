@@ -6,6 +6,7 @@ interface Props {
 
 interface CardPreviewProps {
   imageUrl: string;
+  imageAlt: string;
   onClick?: () => void;
 }
 
@@ -29,12 +30,10 @@ export function Cards({ children }: Props) {
   return <div className={styles.grid}>{children}</div>;
 }
 
-export function CardPreview({ imageUrl, onClick }: CardPreviewProps) {
+export function CardPreview({ imageUrl, imageAlt, onClick }: CardPreviewProps) {
   return (
-    <div
-      onClick={onClick}
-      className={styles.preview}
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    />
+    <div onClick={onClick} className={styles.preview}>
+      <img src={imageUrl} alt={imageAlt} />
+    </div>
   );
 }

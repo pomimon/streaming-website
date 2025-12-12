@@ -27,60 +27,64 @@ interface Stream {
   stat_comments: number;
 }
 
+const poweredRegex = /powered\s*by\s*explore\.org/i;
+
 function getFriendlyName(name: string): string {
-  return name
-    .replace("powered by EXPLORE.org", "")
-    .replace("powered by explore.org", "")
-    .replace("powered by Explore.org", "")
-    .replace("powered byEXPLORE.org", "")
-    .trim();
+  return name.replace(poweredRegex, "").trim();
+}
+
+function StreamCard({
+  ytid,
+  name,
+  thumbnail,
+  onSelect,
+}: Stream & { onSelect: (id: string) => void }) {
+  const friendlyName = getFriendlyName(name);
+
+  return (
+    <Card key={ytid}>
+      <CardHead>
+        <CardPreview
+          imageUrl={thumbnail}
+          imageAlt={friendlyName}
+          onClick={() => onSelect(ytid)}
+        />
+      </CardHead>
+      <CardFoot>{friendlyName}</CardFoot>
+    </Card>
+  );
 }
 
 export function StreamRoute() {
-  const { streams }: { streams: Stream[] } = useLoaderData();
+  const streams = useLoaderData<Stream[]>();
   const { category } = useParams();
   const [currentStream, setCurrentStream] = useState("");
 
-  // console.log(streams);
-  // console.log(category);
-
-  const cards = streams.map(({ ytid, name, thumbnail }) => {
-    const friendlyName = getFriendlyName(name);
-
-    if (friendlyName.toLowerCase().includes("explore.org")) {
-      console.log("TODO: get friendly name", name);
-    }
-
-    return (
-      <Card key={ytid}>
-        <CardHead>
-          <CardPreview
-            imageUrl={thumbnail}
-            onClick={() => setCurrentStream(ytid)}
-          />
-        </CardHead>
-
-        <CardFoot>{friendlyName}</CardFoot>
-      </Card>
-    );
-  });
-
-  const modal = createPortal(
-    <Modal onClose={() => setCurrentStream("")}>
-      <iframe
-        width="100%"
-        style={{ aspectRatio: "16 / 9" }}
-        src={`https://www.youtube.com/embed/${currentStream}?rel=0&autoplay=1&mute=1&controls=1`}
-        allow="autoplay 'src'"
-      />
-    </Modal>,
-    document.body,
-  );
-
   return (
     <>
-      <Cards>{cards}</Cards>
-      {currentStream && modal}
+      <Cards>
+        {streams.map((stream) => (
+          <StreamCard
+            key={stream.ytid}
+            {...stream}
+            onSelect={setCurrentStream}
+          />
+        ))}
+      </Cards>
+
+      {currentStream &&
+        createPortal(
+          <Modal onClose={() => setCurrentStream("")}>
+            <iframe
+              title={`YouTube Stream ${currentStream}`}
+              width="100%"
+              style={{ aspectRatio: "16 / 9" }}
+              src={`https://www.youtube.com/embed/${currentStream}?rel=0&autoplay=1&mute=1&controls=1`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+            />
+          </Modal>,
+          document.body,
+        )}
     </>
   );
 }
