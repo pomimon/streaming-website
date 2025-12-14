@@ -1,0 +1,28 @@
+.tabs {
+  display: flex;
+  padding: 0 1rem;
+  justify-content: center;
+  /*gap: 1.5rem;*/
+
+  a {
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    padding: 1rem 1.75rem;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+
+
+    a {
+      padding: 0.2rem 0.6rem;
+    }
+  }
+}
